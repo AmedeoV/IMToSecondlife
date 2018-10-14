@@ -1,0 +1,142 @@
+﻿@model Textosecondlife.Models.SecondLifeLogInModel
+
+<!DOCTYPE html>
+<html>
+@using (Html.BeginForm("Index", "Home"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <head>
+        <script type="text/javascript" 
+        src="@Url.Content("~/Scripts/spin.js")"></script>
+        <style type="text/css">
+            #loading {
+                display: none;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+
+            #loadingcontent {
+                display: table;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            #loadingspinner {
+                display: table-cell;
+                vertical-align: middle;
+                width: 100%;
+                text-align: center;
+                font-size: larger;
+                padding-top: 80px;
+            }
+        </style>
+        <title>Customer Form</title>
+    </head>
+    <body>
+        <aside>
+        </aside>
+
+        <h4>Sign In to Second Life</h4>
+
+        <div class="session">
+            <div id="right">
+
+                <div>
+                    <p>@Html.LabelFor(m => m.SlUsernameLabel) </p>
+                    @Html.TextBoxFor(m => m.SlUsername, new { @required = "required" })
+                </div>
+                <div>
+                    <p>@Html.LabelFor(m => m.SlPasswordLabel)</p>
+                    @Html.PasswordFor(m => m.SlPassword, new { @required = "required" })
+
+                    <label>&nbsp;</label>
+
+                    <p>
+                        <input id="submitbtn" type="submit" name="Login" value="Login" class="submit" />
+                    </p>
+                </div>
+
+                <div class="left">
+
+                    <h4>Getting Started</h4>
+                    <p>Enter your Username and Password to log into Secondlife and retrieve a list of your friends online.</p>
+                    <p>Click on the "Send Text" tab, to send messages without login.</p>
+
+                    <h4>About</h4>
+                    <p>
+                        IM to Grid is a free service, if you have any questions or suggestions,
+                    please send me a message: <b>Cobain86 Dryke</b>
+                    </p>
+                    <p>If you find <b>IM to Grid</b> useful, please consider donating by <span><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=amedeo%2evertullo%40gmail%2ecom&lc=GB&item_name=Text%20To%20Secondlife&no_note=0&currency_code=GBP&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest" target="_blank">clicking here.</a></span></p>
+                    <p>Your contributions are greatly appreciated.</p>
+                    <h4>Android App</h4>
+                    <p>
+                        If you have an Android Phone, try out the app on Google Play: <span><a href="https://play.google.com/store/apps/details?id=nirvanacreations.slText" target="_blank">Text To Secondlife</a></span> It's FREE!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading">
+            <div id="loadingcontent">
+                <p id="loadingspinner">
+                    Please Wait...
+                </p>
+            </div>
+        </div>
+    </body>
+    
+    <p>
+    </p>
+}
+
+<script>
+
+    $(function() {
+        $("#submitbtn").click(function() {
+            var loginUser = $('#SlUsername').val().trim();
+            var loginPassword = $('#SlPassword').val().trim();
+
+            if (loginPassword != '' && loginUser != '') {
+
+                $("#loading").fadeIn();
+                var opts = {
+                    lines: 12, // The number of lines to draw
+                    length: 7, // The length of each line
+                    width: 4, // The line thickness
+                    radius: 10, // The radius of the inner circle
+                    color: '#000', // #rgb or #rrggbb
+                    speed: 1, // Rounds per second
+                    trail: 60, // Afterglow percentage
+                    shadow: false, // Whether to render a shadow
+                    hwaccel: false // Whether to use hardware acceleration
+                };
+                var target = document.getElementById('loading');
+                var spinner = new Spinner(opts).spin(target);
+            }
+        });
+    });
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-74425525-1', 'auto');
+        ga('send', 'pageview');
+
+</script>
+</html>

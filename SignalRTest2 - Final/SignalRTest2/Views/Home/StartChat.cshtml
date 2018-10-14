@@ -1,0 +1,594 @@
+﻿@model MvcMobile.Models.InstanteMessage
+@{
+    ViewBag.Title = "Chat";
+}
+
+<style type="text/css">
+    .container {
+        margin: 0 auto;
+        height: 100%;
+        width: 100%;
+    }
+
+    .plusIcon {
+        font-size: 40px;
+    }
+
+    .overflowAuto {
+        overflow: auto;
+    }
+
+    .solidColor {
+        background: #E8EAEC;
+    }
+
+    .whiteBackground {
+        background: #ffffff;
+        -moz-box-shadow: 1px 1px 5px 6px #ccc;
+        -webkit-box-shadow: 1px 1px 5px 6px #ccc;
+        box-shadow: .25px .25px 3px .25px #ccc;
+    }
+
+    /* Helper classes */
+
+    .darkBrown {
+        color: #5B483B;
+    }
+
+    .fl {
+        float: left;
+    }
+
+    .fw-400 {
+        font-weight: 400;
+    }
+
+    .fz-14 {
+        font-size: 14px;
+    }
+
+    .fz-18 {
+        font-size: 18px;
+    }
+
+    .fz-22 {
+        font-size: 22px;
+    }
+
+    .mx-2-b {
+        margin-bottom: 2px;
+    }
+
+    .mx-5-b {
+        margin-bottom: 5px;
+    }
+
+    .mx-10-b {
+        margin-bottom: 10px;
+    }
+
+    .mx-15-b {
+        margin-bottom: 15px;
+    }
+
+    .mx-10-t {
+        margin-top: 10px;
+    }
+
+    .w-s-n {
+        white-space: normal;
+    }
+
+    .w-bg {
+        background: #ffffff;
+    }
+
+    /* Home
+   ========================================================================== */
+
+    .home .header {
+        padding-top: 20px;
+    }
+
+        .home .header .container {
+            margin: 0 auto 0 auto;
+            width: 90%;
+        }
+
+        .home .header .logo {
+            height: 30px;
+        }
+
+        .home .header .nav {
+            height: 40px;
+            list-style-type: none;
+        }
+
+            .home .header .nav li {
+                color: #ffffff;
+                float: left;
+                line-height: 40px;
+                margin-top: 6px;
+                text-align: center;
+                vertical-align: middle;
+                width: 60%;
+            }
+
+                .home .header .nav li:first-child {
+                    margin-top: 5px;
+                    text-align: left;
+                    width: 20%;
+                }
+
+                .home .header .nav li:last-child {
+                    margin-top: 0px;
+                    text-align: right;
+                    width: 20%;
+                }
+
+    /* Cards
+   ========================================================================== */
+
+    .card {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        height: 100%;
+        width: 100%;
+    }
+
+        .card .content {
+            min-height: 340px;
+        }
+
+        .card .single {
+            -webkit-border-radius: 3%;
+            -moz-border-radius: 3%;
+            border-radius: 3%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            background: #ffffff;
+            /* Set relative height later */
+            height: 370px;
+            min-height: 370px;
+            margin: 4% auto 0 auto;
+            padding: 20px;
+            width: 260px;
+            position: relative;
+        }
+
+            .card .single:before {
+                content: "";
+                display: block;
+                width: 0;
+                height: 0;
+                border: 10px solid transparent;
+                border-top-color: #ffffff;
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                bottom: -20px;
+            }
+
+        .card .actions {
+            margin: 10px auto;
+            text-align: center;
+            width: 80%;
+        }
+
+            .card .actions .attend, .card .actions .dismiss {
+                width: 40px;
+            }
+
+        .card .author {
+            color: #ffffff;
+            text-align: center;
+            margin-top: 2%;
+        }
+
+        .card .copy {
+            /*font-size: 14px;*/
+        }
+
+        .card .profile {
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            display: block;
+            margin: 17% auto 0 auto;
+            width: 18%;
+        }
+
+        .card .leftSubhead, .card .rightSubhead {
+            width: 50%;
+        }
+
+    /* TRANSITIONS */
+
+    .like {
+        -webkit-transform: translateX(10%) rotate(5deg);
+        -moz-transform: translateX(10%) rotate(5deg);
+        -ms-transform: translateX(10%) rotate(5deg);
+        -o-transform: translateX(10%) rotate(5deg);
+        transform: translateX(10%) rotate(5deg);
+        -webkit-transition: -webkit-transform 200ms ease-in;
+        -moz-transition: -moz-transform 200ms ease-in;
+        -o-transition: -ms-transform 200ms ease-in;
+        transition: transform 200ms ease-in;
+    }
+
+    .leaveLeft {
+        transform: translateX(-100%) rotate(-60deg);
+        -webkit-transform: translateX(-100%) rotate(-60deg);
+        -moz-transform: translateX(-100%) rotate(-60deg);
+        -ms-transform: translateX(-100%) rotate(-60deg);
+        -o-transform: translateX(-100%) rotate(-60deg);
+        transform: translateX(-100%) rotate(-60deg);
+        -webkit-transition: -webkit-transform 400ms ease-in;
+        -moz-transition: -moz-transform 400ms ease-in;
+        -o-transition: -ms-transform 400ms ease-in;
+        transition: transform 400ms ease-in;
+    }
+
+    .leaveRight {
+        transform: translateX(100%) rotate(60deg);
+        -webkit-transform: translateX(100%) rotate(60deg);
+        -moz-transform: translateX(100%) rotate(60deg);
+        -ms-transform: translateX(100%) rotate(60deg);
+        -o-transform: translateX(100%) rotate(60deg);
+        transform: translateX(100%) rotate(60deg);
+        -webkit-transition: -webkit-transform 400ms ease-in;
+        -moz-transition: -moz-transform 400ms ease-in;
+        -o-transition: -ms-transform 400ms ease-in;
+        transition: transform 400ms ease-in;
+    }
+
+    .sideMenuContainer {
+        width: 175px;
+        z-index: -1;
+        height: 100%;
+        position: absolute;
+        background-color: rgba(0,0,0,.6);
+        display: none;
+        top: 0;
+    }
+
+    .menu {
+        list-style-type: none;
+        width: 85%;
+        height: 90%;
+        margin: 30px auto;
+    }
+
+        .menu li {
+            width: 100%;
+            float: left;
+            height: 45px;
+            margin-bottom: 20px;
+            color: #F3F3F3;
+        }
+
+        .menu i {
+            float: left;
+            width: 30%;
+            float: left;
+            border-radius: 50px;
+        }
+
+    .menuItem {
+        float: left;
+        width: 70%;
+        height: 100%;
+        line-height: 37px;
+    }
+
+        .menuItem p {
+            margin-left: 8px;
+        }
+
+    .selectedMenuItem {
+        color: #2ecc71;
+    }
+
+    .bodySlide {
+        transform: translate(175px,0);
+        -webkit-transform: translate(175px,0); /** Chrome & Safari **/
+        -o-transform: translate(175px,0); /** Opera **/
+        -moz-transform: translate(175px,0); /** Firefox **/
+    }
+
+    #panel {
+        background: url('../img/background.png');
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out; /** Chrome & Safari **/
+        -moz-transition: all 0.5s ease-in-out; /** Firefox **/
+        -o-transition: all 0.5s ease-in-out; /** Opera **/
+        width: 100%;
+    }
+
+
+    /* Chat
+   ========================================================================== */
+
+    /* Header */
+
+    .chat .header {
+        padding-top: 10px;
+    }
+
+        .chat .header .container {
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .chat .header .nav {
+            height: 40px;
+            list-style-type: none;
+        }
+
+            .chat .header .nav li {
+                color: #ffffff;
+                float: left;
+                line-height: 40px;
+                margin-top: 4px;
+                text-align: center;
+                vertical-align: middle;
+                width: 60%;
+            }
+
+                .chat .header .nav li:first-child {
+                    margin-top: 5px;
+                    text-align: left;
+                    width: 20%;
+                }
+
+                .chat .header .nav li:last-child {
+                    margin-top: 0px;
+                    text-align: right;
+                    width: 20%;
+                }
+
+    .chatEvent {
+        color: #9F836B;
+    }
+
+    .chatContainer {
+        margin: 20px auto 0 auto;
+        width: 90%;
+    }
+
+    .chat .chatBubble {
+        background: lightgray;
+        -webkit-border-radius: 25%;
+        -moz-border-radius: 25%;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        float: right;
+        margin-bottom: 10px;
+        padding: 10px;
+        width: 80%;
+        position: relative;
+        font-size: 13px;
+    }
+
+        .chat .chatBubble:before {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid lightgray;
+            position: absolute;
+            top: 8px;
+            left: -8px;
+        }
+
+    .chat .input {
+        position: absolute;
+        bottom: 0;
+        height: 40px;
+        background: #ffffff;
+        -moz-box-shadow: 1px 1px 5px 6px #ccc;
+        -webkit-box-shadow: 1px 1px 5px 6px #ccc;
+        box-shadow: .25px .25px 3px .25px #ccc;
+        width: 100%;
+    }
+
+        .chat .input span {
+            background: blue;
+        }
+
+    .chat .inputArea {
+        border: none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        font-size: 14px;
+        height: 100%;
+        resize: none;
+        margin: 0 auto;
+        padding: 15px 10px 15px 10px;
+        width: 90%;
+    }
+
+    .chat .profile {
+        border: 2px solid #ffffff;
+        float: left;
+        width: 12%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+    }
+
+    .chat .sent {
+        background: #84D459;
+        -webkit-border-radius: 25%;
+        -moz-border-radius: 25%;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        float: right;
+        padding: 10px;
+        margin-bottom: 10px;
+        margin-right: 8px;
+        position: relative;
+        font-size: 13px;
+    }
+
+        .chat .sent:before {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid #84D459;
+            position: absolute;
+            top: 8px;
+            right: -8px;
+        }
+</style>
+
+<p></p>
+<button id="MyButton">Donate</button>
+<tr>Please consider donating few lindens to improve this service!</tr>
+<p></p>
+<br/>
+
+<h3>Chatting with @Model.ToUsername</h3>
+<br/>
+<input type="text" id="message" />
+<input type="button" id="sendmessage" value="Send" />
+<input type="hidden" id="displayname" />
+<section class="chat">
+    <div class="chatContainer">
+        <span id="discussion" style="color: black; text-shadow: 0px 0px #ff0000; display: none;"></span>
+    </div>
+
+
+    <h3>Other Messages</h3>
+    <div class="container">
+        <input type="hidden" id="Otherdisplayname" />
+        <div id="Otherdiscussion" style="color: black; text-shadow: 0px 0px #ff0000; display: none;"></div>
+    </div>
+</section>
+
+@section scripts {
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+    <script>
+
+        $(document).ready(function () {
+            var chat = $.connection.chatHub;
+            $.connection.hub.start().done(function () {
+
+                // Call the Send method on the hub. 
+                chat.server.send('@Model.MyUserUiid');
+            });
+        });
+
+        $(function () {
+
+            // Reference the auto-generated proxy for the hub.  
+            var chat = $.connection.chatHub;
+            var d = new Date();
+            // Create a function that the hub can call back to display messages.
+            chat.client.addChatMessage = function (name, message, userUiid) {
+                if (name === '@Model.ToUsername') {
+                    // Add the message to the page. 
+                    $('#discussion').css('display', 'block');
+                    $('#discussion').prepend('<div class="space overflowAuto"><span class="chatBubble">' + htmlEncode(message) + '</span></div>');
+                } else {
+                    $('#Otherdiscussion').css('display', 'block');
+                    $('#Otherdiscussion').prepend('<div class="space overflowAuto"><span class="chatBubble"><a href="' + "/Home/StartChat?userUid=" +
+                        userUiid + "&toUsername=" + htmlEncode(name) + "&myUserID=" + '@Model.MyUserUiid' + '">' + htmlEncode(name) + '</a>' + ": " +
+                        htmlEncode(message) + '</span></div>');
+
+
+@*                    $('#Otherdiscussion').prepend('<a href="' + "/Home/StartChat?userUid=" + userUiid + "&toUsername=" + htmlEncode(name) + "&myUserID=" + '@Model.MyUserUiid' + '">'
+    + "<div><strong>[" + d.toLocaleTimeString() + "] " + htmlEncode(name) + '</a>' + "</strong>: " + htmlEncode(message) + '</div>');*@
+                }
+            };
+            // Set initial focus to message input box.  
+            $('#message').focus();
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    var message = $('#message').val().trim();
+                    if (message == '') {
+                        alert("Please fill in the text box!");
+                        $('#message').val('').focus();
+                        return false;
+                    }
+                    // Call the Send method on the hub. 
+                    chat.server.send("Me", $('#message').val(), '@Model.UserUiid', '@Model.MyUserUiid');
+                    $('#discussion').css('display', 'block');
+                    $('#discussion').prepend('<div class="space overflowAuto"><span class="sent">' + $('#message').val() + '</span></div>');
+                    // Clear text box and reset focus for next comment. 
+                    $('#message').val('').focus();
+                });
+            });
+        });
+
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-74425525-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+
+    <script type="text/javascript">
+        $("#MyButton").click(function () {
+            var person = prompt("Please enter how much you want to donate", "100");
+            $.ajax({
+                type: "POST",
+                url: "/Home/Donate?myUserID=" + '@Model.MyUserUiid' + "&money=" + person,
+                data: "{}",
+                contentType: "application/json",
+                dataType: "json",
+                success: alert("Thank you for your donation!"),
+                error: function (msg) {
+                    console.log('error' + msg);
+                }
+            });
+        })
+    </script>
+}
